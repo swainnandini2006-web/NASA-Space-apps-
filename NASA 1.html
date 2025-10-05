@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Team Shooting Stars</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      color: #e6f7ff;
+      background: radial-gradient(circle at top, #0a0f1f, #000);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* HEADER */
+    header {
+      text-align: center;
+      padding: 80px 20px;
+      background-image: url('bg12.jpg');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+    }
+    header h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 4em;
+      margin: 0;
+      color: #00faff;
+      text-shadow: 0 0 20px rgba(0,255,255,0.7);
+    }
+    header p {
+      font-size: 1.6em;
+      margin-top: 10px;
+      color: #ddd;
+    }
+
+    /* GENERAL SECTIONS */
+    section {
+      padding: 80px 40px;
+      max-width: 1000px;
+      margin: auto;
+      background: rgba(20, 30, 60, 0.6);
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+      margin-bottom: 30px;
+      backdrop-filter: blur(6px);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    section:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+    }
+    h2 {
+      font-family: 'Orbitron', sans-serif;
+      color: #00faff;
+      margin-bottom: 20px;
+      text-align: center;
+      text-shadow: 0 0 8px rgba(0,255,255,0.6);
+    }
+
+    /* TEAM */
+    .team {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+    }
+    .card {
+      background: rgba(10,15,35,0.9);
+      padding: 20px;
+      border-radius: 16px;
+      text-align: center;
+      width: 180px;
+      box-shadow: 0 0 15px rgba(0,255,255,0.15);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 25px rgba(0,255,255,0.4);
+    }
+    .card h3 {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      color: #00faff;
+    }
+    .card p {
+      margin-top: 8px;
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+
+    /* BUTTONS */
+    button {
+      background: linear-gradient(45deg, #00faff, #bf00ff);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+    button:hover {
+      box-shadow: 0 0 15px #00faff;
+      transform: translateY(-2px);
+    }
+
+    #loadDataBtn {
+      display: block;
+      margin: 20px auto;
+    }
+
+    /* ASTEROID TABLE */
+    #asteroidTable {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      font-size: 0.95rem;
+    }
+    #asteroidTable th, #asteroidTable td {
+      padding: 10px;
+      text-align: center;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    #asteroidTable th {
+      background: rgba(0,255,255,0.1);
+      color: #00faff;
+      font-family: 'Orbitron', sans-serif;
+    }
+    #asteroidTable tr:nth-child(even) {
+      background: rgba(255,255,255,0.05);
+    }
+    #asteroidTable tr:hover {
+      background: rgba(0,255,255,0.1);
+      transform: scale(1.01);
+      transition: 0.2s ease;
+    }
+
+    /* IMPACT CALCULATOR */
+    .impact-calculator {
+      background: rgba(10,15,35,0.8);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 0 15px rgba(0,255,255,0.2);
+    }
+    .impact-row {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+    .impact-row label { color: #ddd; }
+    #sizeInput {
+      padding: 8px 10px;
+      border-radius: 6px;
+      border: 1px solid rgba(0,255,255,0.3);
+      background: rgba(0,0,0,0.4);
+      color: #fff;
+      text-align: center;
+      width: 140px;
+    }
+    #impactResult {
+      margin-top: 12px;
+      color: #fff;
+      text-align: left;
+      display: inline-block;
+      background: rgba(255,255,255,0.05);
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 0.98rem;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #05060f;
+      font-size: 1em;
+      color: #aaa;
+      margin-top: auto;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+
+/* About section larger heading + text */
+.about h2 {
+  font-size: 2.0rem;   /* bigger heading */
+  margin-bottom: 0.5rem;
+}
+
+.about p {
+  font-size: 1.1rem;   /* bigger paragraph text */
+  line-height: 1.8;    /* more spacing for readability */
+}
+
+.about {
+  text-align: center; /* centers heading and paragraph */
+   max-width: 1000px;   /* optional: control width */
+  margin: 0 auto;     /* center section horizontally */
+}
+
+/* Objectives section larger heading + list */
+.objectives h2 {
+  font-size: 2.0rem;   /* bigger heading */
+  margin-bottom: 1rem;
+}
+
+.objectives ul {
+  font-size: 1.1rem;   /* bigger list text */
+  line-height: 1.6;    /* more spacing between lines */
+}
+
+.objectives {
+  text-align: center;   /* center the heading and list */
+  max-width: 800px;     /* optional: control width */
+  margin: 0 auto;       /* center the section horizontally */
+}
+
+.objectives ul {
+  display: inline-block;  /* keeps bullets and text together */
+  text-align: left;       /* bullets aligned left inside the block */
+  padding-left: 20px;     /* adjust bullet spacing */
+  margin: 0 auto;         /* center the whole list block */
+  font-size: 1.2rem;      /* optional: make list text bigger */
+  line-height: 1.6;
+}
+
+.explore-comets-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;     /* centers horizontally */
+  justify-content: center; /* centers vertically if extra height */
+  margin: 60px auto;
+  text-align: center;
+}
+
+.explore-comets-section h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #0ff; /* glowing cyan */
+  text-shadow: 0 0 10px #0ff, 0 0 20px #08f;
+}
+
+.comet-card {
+  background: rgba(10,15,35,0.9);
+  padding: 40px;
+  border-radius: 20px;
+  width: 400px;
+  font-size: 1.2rem;
+  box-shadow: 0 0 25px rgba(0,255,255,0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.comet-card:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 0 35px rgba(0,255,255,0.6);
+}
+
+.comet-card button {
+  margin-top: 20px;
+  padding: 15px 35px;
+  font-size: 18px;
+}
+
+
+
+
+  </style>
+</head>
+<body>
+  <header role="banner" aria-label="Team Shooting Stars header">
+    <h1>💫Team Shooting Stars💫</h1>
+    <p>Simulating asteroid impacts & defenses with real NASA + USGS data for Challenge Meteor Madness</p>
+  </header>
+
+  <section class="about">
+    <h2>About the Project</h2>
+    <p>
+      Impactor-2025 is a newly identified near-Earth asteroid. Though impacts are rare,
+      consequences can be catastrophic — from craters and seismic waves to tsunamis.
+      Our project bridges NASA's orbital data and USGS environmental maps to simulate
+      real-world scenarios and test defense strategies. 
+    </p>
+  </section>
+
+  <section class="objectives">
+    <h2>Objectives</h2>
+    <ul>
+      <li>Explore asteroid impact scenarios with live datasets.</li>
+        <li>Simulate environmental effects like blast radius.</li>
+      <li>Test deflection strategies like kinetic impactors.</li>
+      <li>Make results intuitive for scientists, policymakers, and the public.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Near-Earth Objects Today</h2>
+    <button id="loadDataBtn">Load NASA Data</button>
+    <table id="asteroidTable">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Diameter (km)</th>
+          <th>Velocity (km/s)</th>
+          <th>Close Approach Date</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </section>
+
+  <section class="impact-calculator" aria-label="Asteroid impact calculator">
+    <h2>Asteroid Impact Calculator</h2>
+    <div class="impact-row">
+      <label for="sizeInput">Enter diameter (meters):</label>
+      <input id="sizeInput" type="number" min="0.1" step="0.1" placeholder="e.g. 50">
+      <button id="calcBtn" type="button">Calculate Impact</button>
+    </div>
+    <div class="presets">
+      Quick examples:
+      <button class="preset-btn" data-size="20">Chelyabinsk ≈ 20 m</button>
+      <button class="preset-btn" data-size="50">Tunguska ≈ 50 m</button>
+      <button class="preset-btn" data-size="100">Large 100 m</button>
+    </div>
+    <div id="impactResult" aria-live="polite"></div>
+  </section>
+
+ <section class="explore-comets-section">
+  <h2>🌠 Explore Comets</h2>
+  <div class="comet-card">
+    <p>Dive into our comet database for designations, names, and orbital details.</p>
+    <button onclick="window.location.href='comet.html'">Go to Comet Database</button>
+  </div>
+</section>
+
+
+
+
+
+  <section id="team">
+    <h2>Meet the Team</h2>
+    <div class="team">
+      <div class="card"><h3>NAINA</h3><p>Backend and API</p></div>
+      <div class="card"><h3>NANDINI</h3><p>Frontend and Design</p></div>
+      <div class="card"><h3>ADONAI</h3><p>Research and Documentation</p></div>
+      <div class="card"><h3>GOVIND</h3><p>Simulation and Research</p></div>
+      <div class="card"><h3>JASEEL</h3><p>Testing and Analysis</p></div>
+    </div>
+  </section>
+
+  <footer>&copy; 2025 Team Shooting Stars | Made with 💡 and 🚀</footer>
+
+<script>
+  document.getElementById("loadDataBtn").addEventListener("click", loadAsteroids);
+  async function loadAsteroids() {
+    const apiKey = "m4sBEhsFC5hgNk3XT87EiPbZGzkUqM2qeV7e1z0d";
+    const today = new Date().toISOString().split("T")[0];
+    const url = `https://api.nasa.gov/neo/rest/v1/feed?start_date=${today}&end_date=${today}&api_key=${apiKey}`;
+    try {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error("Failed to fetch NASA data");
+      const data = await res.json();
+      const neos = data.near_earth_objects[today];
+      const tbody = document.querySelector("#asteroidTable tbody");
+      tbody.innerHTML = "";
+      neos.forEach(neo => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${neo.name}</td>
+          <td>${neo.estimated_diameter.kilometers.estimated_diameter_max.toFixed(2)}</td>
+          <td>${parseFloat(neo.close_approach_data[0].relative_velocity.kilometers_per_second).toFixed(2)}</td>
+          <td>${neo.close_approach_data[0].close_approach_date}</td>
+        `;
+        tbody.appendChild(row);
+      });
+    } catch (err) {
+      console.error(err);
+      alert("Could not load NASA data!");
+    }
+  }
+</script>
+
+<script>
+  (function(){
+    const DEFAULT_DENSITY = 3000;
+    const DEFAULT_VELOCITY = 20000;
+    const JOULES_PER_TON_TNT = 4.184e9;
+    const TNT_PER_MEGATON = 1e6;
+    const BLAST_K_COEFF = 1.0;
+
+    const sizeInput = document.getElementById('sizeInput');
+    const calcBtn = document.getElementById('calcBtn');
+    const resultDiv = document.getElementById('impactResult');
+
+    function formatNum(n, digits=2){
+      return Number(n).toLocaleString(undefined, {maximumFractionDigits: digits, minimumFractionDigits: digits});
+    }
+    function computeImpact(diameter_m, density=DEFAULT_DENSITY, velocity=DEFAULT_VELOCITY, k=BLAST_K_COEFF){
+      const radius = diameter_m / 2.0;
+      const volume = (4/3) * Math.PI * Math.pow(radius, 3);
+      const mass = volume * density;
+      const energyJ = 0.5 * mass * Math.pow(velocity, 2);
+      const tntTons = energyJ / JOULES_PER_TON_TNT;
+      const megatons = tntTons / TNT_PER_MEGATON;
+      const blast_km = megatons > 0 ? k * Math.cbrt(megatons) : 0;
+      return { mass, energyJ, tntTons, megatons, blast_km };
+    }
+    function showResult(diameter) {
+      const d = Number(diameter);
+      if (!d || d <= 0) {
+        resultDiv.innerHTML = '<p style="color:#ffd1a8">Please enter a valid diameter (meters).</p>';
+        return;
+      }
+      const stats = computeImpact(d);
+      resultDiv.innerHTML = `
+        <strong>Input:</strong> diameter = ${formatNum(d,2)} m<br>
+        <strong>Mass (approx):</strong> ${formatNum(stats.mass,0)} kg<br>
+        <strong>Energy released:</strong> ${formatNum(stats.megatons,2)} megatons of TNT<br>
+        <strong>Energy (J):</strong> ${formatNum(stats.energyJ,0)} J<br>
+        <strong>Estimated blast radius:</strong> ≈ ${formatNum(stats.blast_km,2)} km<br>
+        <small style="color:#ccd">Assumptions: spherical body, density ${DEFAULT_DENSITY} kg/m³, velocity ${DEFAULT_VELOCITY/1000} km/s.</small>
+      `;
+    }
+    calcBtn?.addEventListener('click', () => showResult(sizeInput.value));
+    document.querySelectorAll('.preset-btn').forEach(b => {
+      b.addEventListener('click', (e) => {
+        const s = e.currentTarget.getAttribute('data-size');
+        sizeInput.value = s;
+        showResult(s);
+      });
+    });
+    sizeInput?.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') showResult(sizeInput.value);
+    });
+  })();
+</script>
+</body>
+</html>
+
